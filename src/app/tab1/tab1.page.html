@@ -12,20 +12,20 @@
 
   <ion-list lines="full">
 
-    <ion-item-sliding *ngFor="let filme of listaFilmes">
-      <ion-item>
+    <ion-item-sliding *ngFor="let filme of listaDeFilmes">
+      <ion-item [routerLink]="filme.pagina">
         <ion-thumbnail slot="start">
-          <img src={{filme.img}}>
+          <img src={{filme.cartaz}}>
         </ion-thumbnail>
         <ion-label class="ion-text-wrap">
           <div>
             <h1>{{filme.nome}}</h1>
-            <p>{{filme.data}}</p>
-            <p>{{filme.genero}}</p>
+            <p>{{filme.lancamento}} - {{filme.duracao}}</p>
+            <ion-badge color="light" *ngFor="let genero of filme.generos">{{genero}}</ion-badge>
           </div>
         </ion-label>
         <ion-chip outline="" color="success">
-          <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">{{filme.gostou}}</ion-label>
+          <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">{{filme.classificacao}}%</ion-label>
         </ion-chip>
       </ion-item>
       <ion-item-options side="end" color="amarelo" (click)="exibirAlertaFavorito(filme.nome)">
