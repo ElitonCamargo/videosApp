@@ -7,12 +7,8 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'mortal-kombat',
-    loadChildren: () => import('./filmes/mortal-kombat/mortal-kombat.module').then( m => m.MortalKombatPageModule)
-  },
-  {
-    path: 'sem-remorso',
-    loadChildren: () => import('./filmes/sem-remorso/sem-remorso.module').then( m => m.SemRemorsoPageModule)
+    path: 'detalhes-filme',
+    loadChildren: () => import('./detalhes-filme/detalhes-filme.module').then( m => m.DetalhesFilmePageModule)
   }
 ];
 @NgModule({

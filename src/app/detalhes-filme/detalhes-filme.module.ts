@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MortalKombatPageRoutingModule } from './mortal-kombat-routing.module';
+import { DetalhesFilmePageRoutingModule } from './detalhes-filme-routing.module';
 
-import { MortalKombatPage } from './mortal-kombat.page';
+import { DetalhesFilmePage } from './detalhes-filme.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MortalKombatPageRoutingModule
+    DetalhesFilmePageRoutingModule
   ],
-  declarations: [MortalKombatPage]
+  declarations: [DetalhesFilmePage]
 })
-export class MortalKombatPageModule {}
+export class DetalhesFilmePageModule {}

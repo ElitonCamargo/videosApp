@@ -13,7 +13,7 @@
   <ion-list lines="full">
 
     <ion-item-sliding *ngFor="let filme of listaDeFilmes">
-      <ion-item [routerLink]="filme.pagina">
+      <ion-item (click)="exibirFilme(filme)">
         <ion-thumbnail slot="start">
           <img src={{filme.cartaz}}>
         </ion-thumbnail>
