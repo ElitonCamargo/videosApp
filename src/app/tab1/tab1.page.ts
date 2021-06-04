@@ -1,10 +1,15 @@
-import { IFilme } from './../model/IFilme.model';
-import { DadosService } from './../services/dados.service';
-
-import { Component } from '@angular/core';
+import { GeneroService } from './../services/genero.service';
+import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+
+import { DadosService } from './../services/dados.service';
+import { FilmeService } from './../services/filme.service';
+import { IListaFilmes } from '../models/IListaFilmes.model';
+import { IFilme } from '../models/IFilme.model';
+import { IGenero, IListaGenero } from '../models/IGenero.model';
+
 
 @Component({
   selector: 'app-tab1',
@@ -14,63 +19,25 @@ import { Router } from '@angular/router';
 
 
 
-export class Tab1Page {
+export class Tab1Page implements OnInit {
 
-  public listaDeFilmes: IFilme[] = [
-    {
-      nome: 'Tom & Jerry - O Filme (2021)',
-      lancamento: '11/02/2021 (BR)',
-      duracao: '1h 41m',
-      classificacao: 73,
-      cartaz: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/9NvYyM8H6d5KAVGqpyFV9YPO5cU.jpg',
-      generos: ['Comédia', 'Família', 'Animação'],
-    },
-    {
-      nome: 'Sem Remorso (2021)',
-      lancamento: '30/04/2021 (BR)',
-      duracao: '1h 50m',
-      classificacao: 80,
-      cartaz: 'https://www.themoviedb.org/t/p/w300_and_h450_bestv2/uHEZ4ZMziIjlAgCTQAEh9ROvtj0.jpg',
-      generos: ['Ação', 'Aventura', 'Thriller', 'Guerra'],
-      pagina: '/sem-remorso'
-    },
-    {
-      nome: 'O Conto da Aia (2017)',
-      lancamento: '30/04/2017 (BR)',
-      duracao: '1h 50m',
-      classificacao: 78,
-      cartaz: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/2rK53k6Lg6IDqHM7xp8OTzzzpz7.jpg',
-      generos: ['Sci-Fi & Fantasy', 'Drama'],
-    },
-    {
-      nome: 'Três Homens em Conflito (1966)',
-      lancamento: '11/01/1968 (BR)',
-      duracao: '2h 58m',
-      classificacao: 82,
-      cartaz: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/f6CoXpyZRqYJF3lTfxjWIahO6qM.jpg',
-      generos: ['Faroeste'],
-    },
-    {
-      nome: 'Mortal Kombat (2021)',
-      lancamento: '15/04/2021 (BR)',
-      duracao: '1h 50m',
-      classificacao: 78,
-      cartaz: 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2/w8BVC3qrCWCiTHRz4Rft12dtQF0.jpg',
-      generos: ['Ação', 'Fantasia', 'Aventura'],
-      pagina: '/mortal-kombat'
-    }
 
-  ];
+
+  public listaDeFilmes: IListaFilmes;
+  public generos: string[] = [];
 
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
     public dadosService: DadosService,
-    public route: Router
-  ) { }
+    public route: Router,
+    public filmeService: FilmeService,
+    public generoService: GeneroService
+  ) {}
 
   exibirFilme(filme: IFilme) {
     this.dadosService.guardarDados('filme', filme);
+    this.dadosService.guardarDados('generos', this.generos);
     this.route.navigateByUrl('detalhes-filme');
   }
 
@@ -106,5 +73,19 @@ export class Tab1Page {
       duration: 2000
     });
     toast.present();
+  }
+
+  buscarFilmes(evento: any){
+    const textBusca = evento.target.value;
+    if(textBusca.trim() !== ''){
+      this.filmeService.buscarFilmes(textBusca).subscribe(dados =>{this.listaDeFilmes = dados;});
+    }
+    console.log(this.generos);
+  }
+
+  ngOnInit(){
+    this.generoService.buscarGeneros().subscribe(result =>{
+      result.genres.forEach(genero => {this.generos[genero.id] = genero.name;});
+    });
   }
 }

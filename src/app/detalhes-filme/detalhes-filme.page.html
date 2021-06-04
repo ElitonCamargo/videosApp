@@ -5,22 +5,23 @@
       <ion-back-button></ion-back-button>
     </ion-buttons>
 
-    <ion-title>{{filme.nome}}</ion-title>
+    <ion-title>{{filme.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
   <ion-card>
     <ion-card-header>
-      <img [src]="filme.cartaz">
-      <ion-card-subtitle>{{filme.nome}}</ion-card-subtitle>
+      <img *ngIf="filme.poster_path" src="https://image.tmdb.org/t/p/w500/{{filme.poster_path}}">
+      <ion-icon *ngIf="!filme.poster_path" name="videocam-off"></ion-icon>
+      <ion-card-subtitle>{{filme.title}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-item>
       <ion-icon name="rocket-outline"></ion-icon>
       <ion-icon name="remove-outline"></ion-icon>
       <ion-label class="ion-text-wrap">
-        <p>{{filme.lancamento}}</p>
+        <p>{{filme.release_date | date: 'shortDate'}}</p>
       </ion-label>
     </ion-item>
 
@@ -28,7 +29,7 @@
       <ion-icon name="hourglass-outline"></ion-icon>
       <ion-icon name="remove-outline"></ion-icon>
       <ion-label class="ion-text-wrap">
-        <p>{{filme.duracao}}</p>
+        <p>1h 57m</p>
       </ion-label>
     </ion-item>
 
@@ -36,7 +37,7 @@
       <ion-icon name="videocam-outline"></ion-icon>
       <ion-icon name="remove-outline"></ion-icon>
       <ion-label class="ion-text-wrap">
-        <ion-badge color="light" *ngFor="let genero of filme.generos">{{genero}}</ion-badge>
+        <ion-badge color="light" *ngFor="let genero_id of filme.genre_ids">{{generos[genero_id]}}</ion-badge>
       </ion-label>
     </ion-item>
 
@@ -44,9 +45,20 @@
       <ion-icon name="thumbs-up-outline"></ion-icon>
       <ion-icon name="remove-outline"></ion-icon>
       <ion-label class="ion-text-wrap">
-        <ion-chip outline="" color="success">
-          <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">{{filme.classificacao}}%</ion-label>
+        <ion-chip outline="" [color]="filme.vote_average < 5 ?'danger':filme.vote_average < 7 ?'warning':'success'">
+          <ion-label class="sc-ion-label-ios-h sc-ion-label-ios-s ios hydrated">{{filme.vote_average*10}}<sup>%</sup></ion-label>
         </ion-chip>
+      </ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label class="ion-text-wrap">
+        <p>
+          <ion-icon name="document-text-outline"></ion-icon> -
+          Sinopse
+        </p>
+        <p *ngIf="filme.overview">{{filme.overview}}</p>
+        <p *ngIf="!filme.overview">Não informada!</p>
       </ion-label>
     </ion-item>
 
