@@ -78,14 +78,25 @@ export class Tab1Page implements OnInit {
   buscarFilmes(evento: any){
     const textBusca = evento.target.value;
     if(textBusca.trim() !== ''){
-      this.filmeService.buscarFilmes(textBusca).subscribe(dados =>{this.listaDeFilmes = dados;});
+      this.listarFilmes(textBusca);
     }
-    console.log(this.generos);
+  }
+
+  listarFilmes(textBusca: string){
+    this.filmeService.buscarFilmes(textBusca).subscribe(dados =>{this.listaDeFilmes = dados;});
   }
 
   ngOnInit(){
     this.generoService.buscarGeneros().subscribe(result =>{
       result.genres.forEach(genero => {this.generos[genero.id] = genero.name;});
     });
+    this.listarFilmes(this.listarFilmeAleatorio());
   }
+
+  listarFilmeAleatorio() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const charactersLength = characters.length;
+    return characters.charAt(Math.floor(Math.random() * charactersLength));
+ }
+
 }
