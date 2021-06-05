@@ -1,0 +1,43 @@
+ion-item{
+  --padding-start: 10px;
+  --inner-padding-end:10px;
+  ion-thumbnail{
+    height: auto;
+    margin-inline-end: 5px;
+    margin-top: 2px;
+    margin-bottom: 0px;
+
+    ion-icon{
+      font-size: 2.5rem;
+      color: #bdbdbd;
+    }
+  }
+  h1{
+    font-weight: bold;
+    font-size: 0.8rem;
+  }
+  p{
+    font-size: 0.7rem;
+  }
+  p+p{
+    color: #8a8a8a;
+  }
+  ion-chip{
+    background: #ffffff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: solid 3px;
+    padding-inline: 0;
+    justify-content: center;
+    ion-label{
+      font-weight: bold;
+    }
+  }
+  ion-badge{
+    font-weight: 300;
+    font-size: 0.6rem;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+  }
+}
