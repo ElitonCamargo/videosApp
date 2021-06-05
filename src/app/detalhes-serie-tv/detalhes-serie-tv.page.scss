@@ -1,0 +1,24 @@
+ion-chip{
+  background: #ffffff;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: solid 3px;
+  padding-inline: 0;
+  justify-content: center;
+  ion-label{
+    font-weight: bold;
+  }
+}
+ion-badge{
+  font-weight: 300;
+  font-size: 0.6rem;
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+}
+ion-card-header{
+  ion-icon{
+    font-size: 2.5rem;
+    color: #bdbdbd;
+  }
+}

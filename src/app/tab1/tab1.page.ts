@@ -1,3 +1,6 @@
+import { LanguagesService } from './../services/languages.service';
+import { ICountrie } from '../models/ICountrie.model';
+import { CountriesService } from './../services/countries.service';
 import { GeneroService } from './../services/genero.service';
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
@@ -8,7 +11,7 @@ import { DadosService } from './../services/dados.service';
 import { FilmeService } from './../services/filme.service';
 import { IListaFilmes } from '../models/IListaFilmes.model';
 import { IFilme } from '../models/IFilme.model';
-import { IGenero, IListaGenero } from '../models/IGenero.model';
+import { ILanguages } from '../models/ILanguages.model';
 
 
 @Component({
@@ -26,18 +29,22 @@ export class Tab1Page implements OnInit {
   public listaDeFilmes: IListaFilmes;
   public generos: string[] = [];
 
+  public idioma: ILanguages[] = [];
+
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
     public dadosService: DadosService,
     public route: Router,
     public filmeService: FilmeService,
-    public generoService: GeneroService
+    public generoService: GeneroService,
+    public languagesService: LanguagesService
   ) {}
 
   exibirFilme(filme: IFilme) {
     this.dadosService.guardarDados('filme', filme);
     this.dadosService.guardarDados('generos', this.generos);
+    this.dadosService.guardarDados('idioma', this.idioma);
     this.route.navigateByUrl('detalhes-filme');
   }
 
@@ -90,6 +97,7 @@ export class Tab1Page implements OnInit {
     this.generoService.buscarGeneros().subscribe(result =>{
       result.genres.forEach(genero => {this.generos[genero.id] = genero.name;});
     });
+    this.languagesService.buscarIdioma().subscribe(result => {this.idioma = result;});
     this.listarFilmes(this.listarFilmeAleatorio());
   }
 

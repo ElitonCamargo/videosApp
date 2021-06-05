@@ -1,11 +1,14 @@
+import { TvService } from './../services/tv.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { AlertController, ToastController } from '@ionic/angular';
-import { IListaFilmes } from '../models/IListaFilmes.model';
 import { DadosService } from '../services/dados.service';
 import { FilmeService } from '../services/filme.service';
 import { GeneroService } from '../services/genero.service';
 import { IFilme } from '../models/IFilme.model';
+import { IListaTv, ITv } from '../models/IListaTv.model';
+import { CountriesService } from '../services/countries.service';
+import { ICountrie } from '../models/ICountrie.model';
 
 @Component({
   selector: 'app-tab2',
@@ -14,25 +17,28 @@ import { IFilme } from '../models/IFilme.model';
 })
 export class Tab2Page implements OnInit{
 
-  public listaDeFilmes: IListaFilmes;
+  public listaDeSeriesTv: IListaTv;
   public generos: string[] = [];
+  public paises: string[] = [];
 
   constructor(
     public alertController: AlertController,
     public toastController: ToastController,
     public dadosService: DadosService,
     public route: Router,
-    public filmeService: FilmeService,
+    public tvService: TvService,
+    public countriesService: CountriesService,
     public generoService: GeneroService
   ) {}
 
-  exibirFilme(filme: IFilme) {
-    this.dadosService.guardarDados('filme', filme);
+  exibirDetalhesSerieTv(serie: ITv) {
+    this.dadosService.guardarDados('serie', serie);
     this.dadosService.guardarDados('generos', this.generos);
-    this.route.navigateByUrl('detalhes-filme');
+    this.dadosService.guardarDados('paises', this.paises);
+    this.route.navigateByUrl('detalhes-serie-tv');
   }
 
-  async exibirAlertaFavorito(filme: string) {
+  async exibirAlertaFavorito(serie: string) {
     const alert = await this.alertController.create({
       header: 'Alerta!',
       message: 'Deseja realmente favoritar o filme?',
@@ -46,7 +52,7 @@ export class Tab2Page implements OnInit{
         }, {
           text: 'Sim, favoritar!',
           handler: () => {
-            this.filmeFavoritado(filme);
+            this.filmeFavoritado(serie);
           }
         }
       ]
@@ -55,9 +61,9 @@ export class Tab2Page implements OnInit{
     await alert.present();
   }
 
-  async filmeFavoritado(filme: string) {
+  async filmeFavoritado(serie: string) {
     const toast = await this.toastController.create({
-      header: filme,
+      header: serie,
       position: 'middle',
       color: 'success',
       message: 'favoritado com sucesso!',
@@ -66,22 +72,28 @@ export class Tab2Page implements OnInit{
     toast.present();
   }
 
-  buscarFilmes(evento: any){
+  buscarSeriesTv(evento: any){
     const textBusca = evento.target.value;
     if(textBusca.trim() !== ''){
-      this.listarFilmes(textBusca);
+      this.listarSeriesTv(textBusca);
     }
   }
 
-  listarFilmes(textBusca: string){
-    this.filmeService.buscarFilmes(textBusca).subscribe(dados =>{this.listaDeFilmes = dados;});
+  listarSeriesTv(textBusca: string){
+    this.tvService.buscarSeriesTv(textBusca).subscribe(dados =>{this.listaDeSeriesTv = dados;});
   }
 
   ngOnInit(){
-    this.generoService.buscarGeneros().subscribe(result =>{
+    this.generoService.buscarGeneros('tv').subscribe(result =>{
       result.genres.forEach(genero => {this.generos[genero.id] = genero.name;});
     });
-    this.listarFilmes(this.listarFilmeAleatorio());
+    this.countriesService.buscarPaises().subscribe(result => {
+      //this.paises = result;
+      result.forEach(pais =>{
+        this.paises[pais.iso_3166_1] = pais.native_name;
+      });
+    });
+    this.listarSeriesTv(this.listarFilmeAleatorio());
   }
 
   listarFilmeAleatorio() {
