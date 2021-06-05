@@ -18,7 +18,7 @@ export class FilmeService {
  constructor(private http: HttpClient, private toastController: ToastController) { }
 
   buscarFilmes(buscar: string): Observable<IListaFilmes>{
-    const url = `${this.apiUrl}/search/movie/?${this.language}&${this.region}&${this.key}&query=${buscar}`;
+    const url = `${this.apiUrl}/search/movie?${this.language}&${this.region}&${this.key}&query=${buscar}`;
     console.log('URL:'+ url);
     return this.http.get<IListaFilmes>(url).pipe(
       map(retorno => retorno),
