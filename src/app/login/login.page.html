@@ -1,0 +1,23 @@
+<ion-content [fullscreen]="true">
+  <div class="center">
+    <ion-card class="ion-text-center">
+
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-card-title>Faça login</ion-card-title>
+
+        <ion-item lines="none">
+          <ion-label position="floating">Usuário</ion-label>
+          <ion-input type="email" autocomplete="email" required [(ngModel)]="email"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" >
+          <ion-label position="floating">Senha</ion-label>
+          <ion-input type="password" autocomplete="current-password" required [(ngModel)]="senha"></ion-input>
+        </ion-item>
+
+        <ion-button expand="full" color="primary" (click)="login()">Entrar</ion-button>
+        <ion-button expand="full" color="medium">Criar conta</ion-button>
+
+    </ion-card>
+  </div>
+</ion-content>

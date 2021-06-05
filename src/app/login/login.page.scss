@@ -1,0 +1,13 @@
+.center{
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  ion-card{
+    width: 100vw;
+    box-shadow: rgb(0 0 0 / 0%) 0px 0px 0px;
+    ion-icon{
+      font-size: 15rem;
+    }
+  }
+}
+
