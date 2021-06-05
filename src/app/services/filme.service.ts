@@ -15,9 +15,7 @@ export class FilmeService {
   private language = 'language=pt-BR';
   private region = 'region=BR';
 
-//https://api.themoviedb.org/3/search/movie/?language=pt-BR&region=BR&api_key=034c5fdfe098d8cb374c2152cf44c2e7&query=
-
-  constructor(private http: HttpClient, private toastController: ToastController) { }
+ constructor(private http: HttpClient, private toastController: ToastController) { }
 
   buscarFilmes(buscar: string): Observable<IListaFilmes>{
     const url = `${this.apiUrl}/search/movie/?${this.language}&${this.region}&${this.key}&query=${buscar}`;
